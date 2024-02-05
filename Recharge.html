@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<style>
+    .net {
+        width: 300px;
+        font-size: 14px;
+        height: 5vh;
+    }
+
+    .money {
+        width: 300px;
+        font-size: 14px;
+        margin-top: 20px;
+        height: 5vh;
+    }
+
+    .tagInp {
+        margin-top: 20px;
+    }
+
+    .tagInp input {
+        width: 299px;
+        height: 5vh;
+    }
+
+    .tagBtn2 {
+        margin-top: 20px;
+    }
+
+    .tagBtn2:hover button {
+        background-color: mediumslateblue;
+    }
+
+    .tagBtn2 button {
+        width: 300px;
+        height: 5vh;
+        border: none;
+        background-color: gray;
+        color: white;
+    }
+
+    .tagBtn {
+        margin-top: 20px;
+    }
+
+    .tagBtn:hover button {
+        background-color: darkslategrey;
+        transition: ease-in-out;
+    }
+
+    .tagBtn button {
+        width: 300px;
+        height: 5vh;
+        border: none;
+        background-color: black;
+        color: white;
+    }
+
+    .container1 {
+        background-color: blue;
+        box-shadow: 2px 2px 5px 2px;
+        width: 300px;
+        padding-left: 30px;
+        padding-right: 330px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .container2 {
+        background-color: purple;
+        box-shadow: 2px 2px 5px 2px;
+        width: 300px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        padding-left: 30px;
+        padding-right: 300px;
+    }
+
+    .big-container {
+        display: flex;
+        justify-content: center;
+        gap: 100px;
+        margin-top: 20px;
+    }
+
+    .inp {
+        /* display: flex;
+        justify-content: center; */
+        margin-top: 70px;
+    }
+
+    .inp input {
+        width: 270px;
+    }
+
+    .inpBtn {
+        /* display: flex;
+        justify-content: center; */
+        margin-top: 20px;
+    }
+
+    .inpBtn button {
+        width: 270px;
+        border: none;
+    }
+
+    .divP {
+        position: fixed;
+    }
+
+    #tableData {
+        margin-top: 20px;
+    }
+
+    .walletbox {
+        background-color: wheat;
+        width: 210px;
+        box-shadow: 2px 2px 5px 2px;
+    }
+
+    /* .Boxdiv{
+        position: absolute;
+        background-color: white;
+        width: 280px;
+        height: 23vh;
+        left: 500px;
+    }
+    .Boxdiv button{
+        width: 230px;
+        left: 27px;
+        top: 80px;
+        position: absolute;
+    } */
+
+    @media(max-width:700px) {
+        .big-container {
+            flex-wrap: wrap;
+        }
+    }
+</style>
+
+<body>
+    <div class="walletbox">
+        <h4>Available Balance</h4>
+        <h2 id="wallet">]
+
+        </h2>
+    </div>
+
+    <!-- <div hidden class="Boxdiv" id="box">
+        <p id="PtagMssg"></p>
+        <button class="btnClose" onclick="closeModal()">Close</button>
+    </div> -->
+
+    <div class="big-container">
+        <div class="container1">
+            <div>
+                <select name="" id="network" class="net">
+                    <option value="Select Network">Select Network</option>
+                    <option value="Mtn">Mtn</option>
+                    <option value="Glo">Glo</option>
+                    <option value="Airtiel">Airtiel</option>
+                </select>
+            </div>
+
+
+            <div>
+                <select name="" id="amount" class="money">
+                    <option value="Select Amount">Select Amount</option>
+                    <option value="1000">1000</option>
+                    <option value="500">500</option>
+                    <option value="300">300</option>
+                    <option value="200">200</option>
+                    <option value="100">100</option>
+                    <option value="50">50</option>
+                    <option value="800">800</option>
+                </select>
+            </div>
+
+            <div class="tagInp">
+                <input type="text" id="rechargeCardPin">
+            </div>
+
+            <div class="tagBtn">
+                <button onclick="rechargeCard()">Get-Rechrge-Pin</button>
+            </div>
+
+            <div class="tagBtn2">
+                <button onclick="displayCardDetails()">Load-Card-Data</button>
+            </div>
+            <p id="pTag" class="divP"></p>
+        </div>
+
+        <div class="container2">
+            <div class="inp">
+                <input type="text" id="pinVal">
+            </div>
+            <div class="inpBtn">
+                <button onclick="loadPinBtn()">Load-Pin</button>
+            </div>
+        </div>
+
+    </div>
+
+    <table class="table table-dark table-striped" id="tableData">
+        <tr>
+            <th scope="row">1</th>
+            <td>Network</td>
+            <td>Amount</td>
+            <td>Date</td>
+            <td>CardPin</td>
+            <td>Time</td>
+            <td>Status</td>
+            <td>Delete</td>
+        </tr>
+        <tbody id="cardTable"></tbody>
+    </table>
+
+
+</body>
+
+
+<script>
+
+    const netWork = document.querySelector('#network')
+    const amount = document.querySelector('#amount')
+    const rechargeCardPin = document.querySelector('#rechargeCardPin')
+    const pinVal = document.querySelector('#pinVal')
+    // let PtagMssg = document.querySelector('#PtagMssg')
+    // let box = document.querySelector('#box')
+
+    let walletBalance = 800.00
+    let selected = true;
+
+    let remainingAmount = walletBalance;
+
+    let cardArray = []
+    let randomCardPin;
+    let code = {
+        Mtn: '311',
+        Glo: '232',
+        Airtiel: '555'
+    }
+
+    let rechargeLine;
+    let rechargeAmount;
+    wallet.innerHTML = `<h2>#${walletBalance}.00</h2>`
+
+    let timeZone = new Date()
+
+    function rechargeCard() {
+        rechargeLine = netWork.value
+        rechargeAmount = amount.value
+
+        randomCardPin = Math.floor(Math.random() * 9634589322413467)
+
+        let rechargePin = rechargeCardPin.value
+
+        if (rechargeLine === 'Select Network' || rechargeAmount === 'Select Amount') {
+            pTag.innerText = 'Pls fill all details'
+            pTag.style.color = 'red'
+            pTag.style.display = 'block'
+        } else {
+            rechargeCardPin.value = `*${code[rechargeLine]}*${randomCardPin}#`
+            pTag.innerText = 'card bought successfully'
+            pTag.style.color = 'green'
+
+        }
+
+        let loadCard = {
+            cardLine: rechargeLine,
+            cardAmount: rechargeAmount,
+            cardPin: rechargeCardPin.value,
+            time: timeZone.toLocaleTimeString(),
+            date: timeZone.toLocaleDateString(),
+            status: 'UNUSED'
+        }
+
+        cardArray.push(loadCard)
+    }
+
+    function displayCardDetails() {
+        cardTable.innerHTML = ''
+        cardArray.forEach((data, i) => {
+            cardTable.innerHTML += `
+                <tr>
+                   <th scope="row">${i + 1}</th>
+                   <td>${data.cardLine}</td>
+                   <td>${data.cardAmount}</td>
+                   <td>${data.date}</td>
+                   <td>${data.cardPin}</td>
+                   <td>${data.time}</td>
+                   <td>${data.status}</td>
+                   <td> <button type="button" class="btn btn-danger" onclick="deleteCard(${i})">splice</button> </td>
+                </tr>
+            `
+        });
+        pTag.style.display = 'none'
+    }
+
+    function deleteCard(i) {
+        cardArray.splice(i, 1)
+        displayCardDetails()
+    }
+
+    const balance = document.getElementById('balance')
+
+    function loadPinBtn() {
+        let isFound = false
+        console.log(typeof isFound);
+        if (rechargeAmount > remainingAmount) {
+            alert('Please fund your wallet')
+            return;
+        }
+        cardArray.forEach((card) => {
+            if(card.cardPin === pinVal.value) {
+                isFound = true
+                if (card.status === 'USED') {
+                    alert('This card has been used by u!')
+                }
+                else if(card.status === 'UNUSED') {
+    
+                    remainingAmount = remainingAmount - card.cardAmount;
+    
+                    wallet.innerHTML = `<h2>#${remainingAmount}.00</h2>`
+    
+                    card.status = "USED"
+                   
+                }
+            } 
+        })
+
+        if (!isFound) {
+            alert("Invalid pin!!!")
+        }
+
+        
+        displayCardDetails()
+    }
+
+
+    
+
+   
+
+
+    // function displayModalContent(text, color) {
+    //     PtagMssg.innerText = `<p>${text}</p>`
+    //     PtagMssg.innerHTML = `<span>${color}</span>`
+    //     displayCardDetails()
+    // }
+
+    // function closeModal() {
+    //     box.hidden=true
+    // }
+
+
+
+
+</script>
+
+</html> 
